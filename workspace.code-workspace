@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "folders": [
         {
             "path": "../ms-communication-master"
@@ -7,4 +8,24 @@
             "path": "."
         }
     ]
+=======
+	"folders": [
+		{
+			"path": "../notebook-api"
+		},
+		{
+			"path": "../module-web"
+		},
+		{
+			"path": "../loginapp-frontend-master"
+		},
+		{
+			"path": "../ms-communication-master"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+>>>>>>> d926f663... Initial commit
 }

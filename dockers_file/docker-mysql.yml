@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  mysql:
+    container_name: module_db
+    restart: always
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'secret_root_password'
+      MYSQL_USER: 'module_db_user'
+      MYSQL_PASS: 'secret654'
+    volumes:
+      - dbdata:/var/lib/mysql
+volumes:
+    dbdata:
