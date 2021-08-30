@@ -1,6 +1,6 @@
 package com.ivanicob.feedbackservice.listener;
 
-import com.ivanicob.feedbackservice.dto.ProjectStatusChangeDto;
+import com.ivanicob.feedbackservice.dto.ProjectStatusChangeDTO;
 import com.ivanicob.feedbackservice.service.EmailService;
 import com.ivanicob.feedbackservice.service.TemplateService;
 
@@ -20,10 +20,10 @@ public class ProjectStatusChangeMailerListener {
     private final TemplateService templateService;
 
     @KafkaListener(topicPattern = "${kafka.topics.project-status-changed}", autoStartup = "${kafka.enabled}")
-    public void listenToProjectStatusChange(ConsumerRecord<String, ProjectStatusChangeDto> record) {
+    public void listenToProjectStatusChange(ConsumerRecord<String, ProjectStatusChangeDTO> record) {
         log.info("Request for project status change received: " + record.toString());
 
-        ProjectStatusChangeDto payload = record.value();
+        ProjectStatusChangeDTO payload = record.value();
 
         if (payload.getAuthorEmailAddress() == null) {
             log.warn("Ignoring request to send an e-mail without e-mail address: " + record.toString());

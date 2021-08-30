@@ -1,7 +1,5 @@
 package com.ivanicob.userservice;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -39,6 +33,7 @@ public class UserServiceApplication {
                 new User("Suely Therezinha", "suely", "secret890", "suely@gmail.com", RoleEnum.ROLE_USER)
         ).collect(Collectors.toList());
         repository.saveAll(users);
+        log.info("Save success!");
     }
  
 	@Bean

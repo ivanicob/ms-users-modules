@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ivanicob</groupId>
-	<artifactId>ms-users_module</artifactId>
+	<artifactId>ms-users-module</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
@@ -17,6 +17,5 @@
 		<module>module-mysql</module>
 		<module>module-kafka</module>
 		<module>module-rabbitmq</module>
-		<module>module-gateway</module>
 	</modules>
 </project>

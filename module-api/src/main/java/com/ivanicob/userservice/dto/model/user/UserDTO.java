@@ -44,6 +44,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 	private String password;
 	
 	@Getter
+	@NotNull(message="Email is required.")
 	@Length(max=80, message="Email must be a maximum of 80 characters.")
 	@Email(message="Invalid email.")
 	private String email;

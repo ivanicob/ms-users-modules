@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import com.ivanicob.feedbackservice.dto.EmailContentDto;
+import com.ivanicob.feedbackservice.dto.EmailContentDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    public void sendEmail(String recipient, String subject, EmailContentDto content) throws MailException {
+    public void sendEmail(String recipient, String subject, EmailContentDTO content) throws MailException {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
             messageHelper.setFrom(emailFromAddress);

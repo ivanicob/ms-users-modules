@@ -1,12 +1,10 @@
 package com.ivanicob.userservice.config;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -58,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/configuration/security",
             "/swagger-ui.html",
+            "/email",
             "/webjars/**"
     };  
     
@@ -67,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //.configurationSource(corsConfigurationSource())
         .and()
             .authorizeRequests()
-                .antMatchers("/api/v1/authenticate","/api/v1/users/*")
+                .antMatchers("/api/v1/authenticate","/api/v1/users/*","/email")
                     .permitAll()
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
                     .permitAll()

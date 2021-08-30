@@ -1,7 +1,7 @@
 package com.ivanicob.feedbackservice.controller;
 
 import com.ivanicob.feedbackservice.config.KafkaProperties;
-import com.ivanicob.feedbackservice.dto.ProjectStatusChangeDto;
+import com.ivanicob.feedbackservice.dto.ProjectStatusChangeDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class GatewayKafkaController {
     
-    private KafkaTemplate<String, ProjectStatusChangeDto> kakfaProducer;
+    private KafkaTemplate<String, ProjectStatusChangeDTO> kakfaProducer;
     private KafkaProperties kafkaProperties;
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void sendProjectStatusEmail(@RequestBody ProjectStatusChangeDto statusChange) {
+    public void sendProjectStatusEmail(@RequestBody ProjectStatusChangeDTO statusChange) {
         log.info("Sending mailing request: " + statusChange.toString());
         kakfaProducer.send(kafkaProperties.getTopics().getProjectStatusChanged(), statusChange);
     }
