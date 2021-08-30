@@ -27,3 +27,30 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   <img src="./images/api_07.png" width="32%" alt="api_07" style="zoom: 32%;"/>
   <img src="./images/api_08.png" width="32%" alt="api_08" style="zoom: 32%;"/>
 </p>
+<p float="center">
+  <img src="./images/api_09.png" width="32%" alt="api_09" style="zoom: 32%;"/>
+  <img src="./images/api_10.png" width="32%" alt="api_10" style="zoom: 32%;"/>
+  <img src="./images/api_11.png" width="32%" alt="api_11" style="zoom: 32%;"/>
+</p>
+
+<p float="center">
+  <img src="./images/api_12.png" width="32%" alt="api_12" style="zoom: 32%;"/>
+  <img src="./images/api_13.png" width="32%" alt="api_13" style="zoom: 32%;"/>
+  <img src="./images/api_14.png" width="32%" alt="api_14" style="zoom: 32%;"/>
+</p>
+
+<p float="center">
+  <img src="./images/api_14.png" width="32%" alt="api_14" style="zoom: 32%;"/>
+  <img src="./images/api_15.png" width="32%" alt="api_15" style="zoom: 32%;"/>
+  <img src="./images/docker_dashboard_01.png" width="32%" alt="api_14" style="zoom: 32%;"/>
+</p>
+
+<p float="center">
+  <img src="./images/kafka_and_send_email.gif" width="48%" alt="api_48" style="zoom: 48%;"/>
+  <img src="./images/rabbitmq-and-kafka-send-email.gif" width="48%" alt="api_48" style="zoom: 48%;"/>
+</p>
+
+
+
+
+
