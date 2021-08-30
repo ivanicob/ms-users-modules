@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,13 +26,13 @@ public class UserServiceApplication {
     @Autowired
     private UserRepository repository;
     
-    //@PostConstruct
+    @PostConstruct
     public void initUsers() {
         List<User> users = Stream.of(
                 new User("Ivan Carlos", "ivan", "secret456", "ivanicob@gmail.com", RoleEnum.ROLE_ADMIN),
                 new User("Andréa Freitas", "andrea", "secret123", "andrea@gmail.com", RoleEnum.ROLE_USER),
                 new User("Luana Carlos", "luana", "secret789", "luana@gmail.com", RoleEnum.ROLE_USER),
-                new User("Suely Therezinha", "suely", "secret890", "suely@gmail.com", RoleEnum.ROLE_USER)
+                new User("Suely Therezinha", "suely", "secret890", "suely@gmail.com", RoleEnum.ROLE_ADMIN)
         ).collect(Collectors.toList());
         repository.saveAll(users);
         log.info("Save success!");

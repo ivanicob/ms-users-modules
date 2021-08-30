@@ -1,10 +1,39 @@
+version: '3.1'
+services:
+
+  mysql:
+    container_name: module_db
+    restart: always
+    image: mysql:latest   
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret_root_password
+      - MYSQL_DATABASE=modules
+      - MYSQL_USER=loginMySql
+      - MYSQL_PASSWORD=secret654
+    ports:
+      - 3306:3306
+    security_opt:
+      - seccomp:unconfined      
+    volumes:
+      - dbdata:/var/lib/mysql
+
   module-api:
+    container_name: 'module-api'
     build:
       context: ../module-api/
       dockerfile: ./docker/Dockerfile
-    command: mvn spring-boot:run
+    ports:
+       - 8086:8086
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://module_db:3306/modules?autoReconnect=true&useSSL=false
+    depends_on:
+      - mysql    
+    command: mvn spring-boot:run -X
     environment:
       - JAVA_TOOL_OPTIONS="-Xmx512m"
     volumes:
       - ../module-api:/tmp/app:delegated
       - ~/.m2:/home/deploy/.m2:cached
+
+volumes:
+    dbdata:      
