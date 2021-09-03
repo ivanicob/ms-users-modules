@@ -2,6 +2,8 @@ package com.ivanicob.userservice.controller.v1.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ public class AuthenticationController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -31,12 +34,22 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
-            );
+        	
+        	jwtUtil.initUsers();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            
+        }catch (DisabledException e){
+        	e.printStackTrace();
+        	throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+        	e.printStackTrace();
+        	throw new Exception("INVALID_CREDENTIALS", e);
         } catch (Exception ex) {
+        	ex.printStackTrace();
             throw new Exception("Inavalid username/password");
         }
-        return jwtUtil.generateToken(authRequest.getUserName());
+        return jwtUtil.generateToken(authRequest.getUsername());
     }
+    
 }
 

@@ -54,11 +54,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 	@Pattern(regexp="^(ROLE_ADMIN|ROLE_USER)$", 
 		message="For the access role only the values ROLE_ADMIN or ROLE_USER are accepted.")
 	private String role;
-		
-	public String getPassword() {
-		return BcryptUtil.getHash(this.password);
-	}
-	
+			
 	@ApiModelProperty(hidden = true)
 	public void setLinks(final Link... links) {
 	    super.add(links);
@@ -72,7 +68,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 		user.setName(this.getName());
 		user.setLogin(this.getLogin());
 		user.setEmail(this.getEmail());
-		user.setPassword(this.getPassword());
+		user.setPassword(BcryptUtil.getHash(this.password));
 		user.setRole(RoleEnum.forName(this.getRole()));
 		
 		return user;

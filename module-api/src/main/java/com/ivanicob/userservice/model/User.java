@@ -3,7 +3,6 @@ package com.ivanicob.userservice.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.modelmapper.ModelMapper;
 
 import com.ivanicob.userservice.dto.model.user.UserDTO;
@@ -20,12 +22,13 @@ import com.ivanicob.userservice.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "modules", name = "users")
+@Table(catalog = "modules", name = "users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 203841311828749559L;
@@ -34,27 +37,27 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@NonNull
 	private String name;
 	
-	@Column(nullable = false)
+	@NonNull
 	private String login;	
 	
-	@Column(nullable = false)
+	@JsonIgnore
 	private String password;
 	
-	@Column(nullable = false)
+	@NonNull
 	private String email;
 	
-	@Column(nullable = true)
+	@CreationTimestamp
 	private LocalDateTime createdDate;
 	
-	@Column(nullable = true)
+	@UpdateTimestamp	
 	private LocalDateTime updatedDate;	
 	
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
-	
+		
 	public User(Long id) {
 		this.id = id;	
 	}
@@ -73,6 +76,8 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.role = role;
-	}	
+	}
+
+	
 
 }

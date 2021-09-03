@@ -2,16 +2,18 @@ version: '3.1'
 services:
 
   mysql:
-    container_name: module_db
+    container_name: 'module_db'
     restart: always
-    image: mysql:latest   
+    image: mysql:latest
+       
     environment:
-      - MYSQL_ROOT_PASSWORD=secret_root_password
-      - MYSQL_DATABASE=modules
-      - MYSQL_USER=loginMySql
-      - MYSQL_PASSWORD=secret654
+      DATABASE_HOST: db
+      DATABASE_USER: loginMySql
+      DATABASE_PASSWORD: secret654
+      DATABASE_NAME: modules
+      DATABASE_PORT: "3306"
     ports:
-      - 3306:3306
+      - "3306:3306"
     security_opt:
       - seccomp:unconfined      
     volumes:
@@ -25,10 +27,10 @@ services:
     ports:
        - 8086:8086
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://module_db:3306/modules?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://module_db:3306/modules?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
     depends_on:
       - mysql    
-    command: mvn spring-boot:run -X
+    command: mvn spring-boot:run
     environment:
       - JAVA_TOOL_OPTIONS="-Xmx512m"
     volumes:

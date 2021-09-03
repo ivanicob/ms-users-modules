@@ -3,15 +3,16 @@ services:
   mysql:
     container_name: module_db
     restart: always
-    image: mysql:latest
+    image: mysql:latest   
     environment:
-      - MYSQL_ROOT_PASSWORD: 'secret_root_password'
-      - MYSQL_DATABASE: modules
-      - MYSQL_USER: 'loginMySql'
-      - MYSQL_PASSWORD: 'secret654'
+      - MYSQL_DATABASE=modules
+      - MYSQL_USER=loginMySql
+      - MYSQL_PASSWORD=secret654
     ports:
-      - 3307:3306      
+      - 3306:3306
+    security_opt:
+      - seccomp:unconfined      
     volumes:
       - dbdata:/var/lib/mysql
 volumes:
-    dbdata:
+    dbdata:      

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import org.springframework.hateoas.client.LinkDiscoverer;
@@ -57,6 +58,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	    return Arrays.asList(new SecurityReference("JWT", authorizationScopes)); 
 	}	
 	
+	@Primary
     @Bean
     public LinkDiscoverers discoverers() {
         List<LinkDiscoverer> plugins = new ArrayList<>();

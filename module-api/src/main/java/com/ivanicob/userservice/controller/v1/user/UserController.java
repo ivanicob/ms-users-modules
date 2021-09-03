@@ -57,8 +57,8 @@ public class UserController {
 		@ApiResponses(value = {
 		     @ApiResponse(code = 200, message = "ok"),
 		     @ApiResponse(code = 400, message = "Bad Request"),
-		     @ApiResponse(code = 401, message = "not authorized"),
-		     @ApiResponse(code = 403, message = "not authenticated"),
+		     @ApiResponse(code = 401, message = "Not authorized"),
+		     @ApiResponse(code = 403, message = "Not authenticated"),
 		     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
 		     @ApiResponse(code = 500, message = "Interval Server Error")
 	})	
