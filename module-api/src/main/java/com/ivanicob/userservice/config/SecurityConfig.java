@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,17 +21,30 @@ import com.ivanicob.userservice.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsService jwtUserDetailsService;
 
     @Autowired
     private JwtFilter jwtFilter;
+    
+    @Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		
+		// configure AuthenticationManager so that it knows from where to load		
+		// user for matching credentials
+		// Use BCryptPasswordEncoder
+		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+	}
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(jwtUserDetailsService);
     }
     
     @Bean
@@ -74,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"))
               .and().httpBasic()
               .and().headers().frameOptions().disable()
-              .and().exceptionHandling()
+              .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
               .and().sessionManagement()
               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
       http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
