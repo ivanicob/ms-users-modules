@@ -1,0 +1,6 @@
+{
+    "/user-service/api": {
+      "target": "http://localhost:8086",
+      "secure": false
+    }
+}
