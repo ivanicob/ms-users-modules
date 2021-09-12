@@ -18,6 +18,12 @@
 		{
 			"name": "ms-users-modules",
 			"path": "."
+		},
+		{
+			"path": "../employeemanagerapp-master"
+		},
+		{
+			"path": "../employeemanager-master"
 		}
 	],
 	"settings": {
