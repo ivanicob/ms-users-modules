@@ -9,6 +9,8 @@ public interface UserService {
 
 	User findById(Long id) throws UserNotFoundException;
 	
+	User findByLogin(String login) throws UserNotFoundException;
+	
 	List<User> findAll();
 	
 	User save(User user);

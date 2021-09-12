@@ -35,6 +35,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Component
 @Order(1)
 @EnableSwagger2
+//@EnableSwagger2WebFlux
 @PropertySource({"classpath:swagger.properties"})
 @ConditionalOnResource(resources = {"classpath:swagger.properties"})
 @Configuration

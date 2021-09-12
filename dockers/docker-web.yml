@@ -1,0 +1,13 @@
+version: '3.7'
+
+ # Our frontend micro-service
+services:
+  angular:
+    build:
+      context: ../module-web/
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    container_name: module_web
+    volumes:
+       - ../module-web/app:/usr/app

@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ivanicob.userservice.dto.model.user.UserResponse;
 import com.ivanicob.userservice.model.AuthRequest;
+import com.ivanicob.userservice.model.User;
+import com.ivanicob.userservice.service.UserService;
 import com.ivanicob.userservice.util.security.JwtUtil;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 public class AuthenticationController {
 
@@ -25,6 +28,9 @@ public class AuthenticationController {
     
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private UserService userService;    
 
     @GetMapping("/")
     public String welcome() {
@@ -32,7 +38,7 @@ public class AuthenticationController {
     }	
     
     @PostMapping("/authenticate")
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+    public UserResponse generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
         	
         	jwtUtil.initUsers();
@@ -48,7 +54,12 @@ public class AuthenticationController {
         	ex.printStackTrace();
             throw new Exception("Inavalid username/password");
         }
-        return jwtUtil.generateToken(authRequest.getUsername());
+        
+        User user = userService.findByLogin(authRequest.getUsername());
+        String token = jwtUtil.generateToken(authRequest.getUsername());
+        UserResponse userResponse = new UserResponse();
+        
+        return  userResponse.convertEntityToUserResponse(user, token);
     }
     
 }

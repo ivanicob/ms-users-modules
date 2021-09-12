@@ -12,7 +12,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	Optional<User> findByEmail(String email);
 	
-	User findByLogin(String login);
+	Optional<User> findByLogin(String login);
 	
 }
 

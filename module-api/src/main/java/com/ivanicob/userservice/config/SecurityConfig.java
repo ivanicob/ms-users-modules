@@ -15,13 +15,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.ivanicob.userservice.filter.JwtFilter;
 import com.ivanicob.userservice.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@CrossOrigin(origins = "*")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -72,9 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-  	
+ 	  
   	http.cors().and()
-  			.csrf().disable()
+  	 		.csrf().disable()
   			.authorizeRequests()
   			.antMatchers(AUTH_WHITELIST).permitAll()               
   			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -82,17 +84,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   			.and().headers()
   			// the headers you want here. This solved all my CORS problems! 
   			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
-  			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "*"))
+  			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS"))
   			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Max-Age", "3600"))
-  			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "false"))
+  			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Expose-Headers", "Authorization"))
+  			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
   			.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"))
-              .and().httpBasic()
-              .and().headers().frameOptions().disable()
-              .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-              .and().sessionManagement()
-              .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .and().httpBasic()
+            .and().headers().frameOptions().disable()
+            .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and().sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
       http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
-  }    
+  } 
   
 }
 

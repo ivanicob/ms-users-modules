@@ -9,18 +9,24 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ivanicob.userservice.model.User;
-import com.ivanicob.userservice.repository.user.UserRepository;
+import com.ivanicob.userservice.util.exceptions.UserNotFoundException;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	
     @Autowired
-    private UserRepository repository;
+    private UserService service;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    	User user = repository.findByLogin(username);
+    	User user = null;
+    	
+		try {
+			user = service.findByLogin(username);
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
     	
         if (user == null)
             throw new UsernameNotFoundException("No user found with username: " + username);

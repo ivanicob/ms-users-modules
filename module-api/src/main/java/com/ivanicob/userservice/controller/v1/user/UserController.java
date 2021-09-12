@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @Api(value = "User Service")
 @RequestMapping("/api/v1/users")
+@CrossOrigin(origins = "*")
 public class UserController {
 	
 	@Autowired

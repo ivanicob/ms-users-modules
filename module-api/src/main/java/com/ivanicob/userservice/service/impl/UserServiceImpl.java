@@ -28,6 +28,16 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
+	 * @see UserService#findByLogin(String)
+	 * @throws UserNotFoundException 
+	 */
+	@Override
+	public User findByLogin(String login) throws UserNotFoundException {
+		return repository.findByLogin(login).orElseThrow(() -> 
+			new UserNotFoundException("User login=" + login + " not found"));
+	}	
+	
+	/**
 	 * @see UserService#findAll()
 	 */
 	@Override
