@@ -11,10 +11,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 # Images
 
 <p float="center">
-  <img src="./images/web_01.png" width="32%" alt="web_01" style="zoom: 32%;"/>
+  <img src="./images/web_02.png" width="48%" alt="web_02" style="zoom: 50%;"/>
+  <img src="./images/web_03.png" width="48%" alt="web_03" style="zoom: 50%;"/>
+</p>
+
+<p float="center">
   <img src="./images/api_01.png" width="32%" alt="api_01" style="zoom: 32%;"/>
   <img src="./images/api_02.png" width="32%" alt="api_02" style="zoom: 32%;"/>
 </p>
+
 
 <p float="center">
   <img src="./images/api_03.png" width="32%" alt="api_03" style="zoom: 32%;"/>
@@ -49,7 +54,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   <img src="./images/kafka_and_send_email.gif" width="48%" alt="api_48" style="zoom: 48%;"/>
   <img src="./images/rabbitmq-and-kafka-send-email.gif" width="48%" alt="api_48" style="zoom: 48%;"/>
 </p>
-
 
 
 
