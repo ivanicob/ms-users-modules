@@ -34,7 +34,147 @@
   
 <div class="content" role="main">
 
-
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  <hr>
+  <div class="container bootstrap snippets bootdey">
+      <div class="row" >
+          <div class="col-lg-12">
+              <div class="main-box no-header clearfix">
+                  <div class="main-box-body clearfix">
+                      <div class="table-responsive">
+                          <table class="table user-list">
+                              <thead>
+                                  <tr>
+                                  <th><span>User</span></th>
+                                  <th><span>Created</span></th>
+                                  <th class="text-center"><span>Status</span></th>
+                                  <th><span>Email</span></th>
+                                  <th>&nbsp;</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let user of users">
+                                      <td>
+                                          <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" *ngIf="user.id == 1">
+                                          <img src="/assets/images/avatar_andrea.png" alt="" *ngIf="user.id == 2">
+                                          <img src="/assets/images/avatar_luana.png" alt="" *ngIf="user.id == 3">
+                                          <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" *ngIf="user.id == 4">
+                                          <a href="#" class="user-link">{{user.name}}</a>
+                                          <span class="user-subhead" *ngIf="user.id == 1">Admin</span>
+                                          <span class="user-subhead" *ngIf="user.id == 2">Member</span>
+                                          <span class="user-subhead" *ngIf="user.id == 3">Member</span>
+                                          <span class="user-subhead" *ngIf="user.id == 4">Admin</span>                                          
+                                      </td>
+                                      <td *ngIf="user.id == 1">2021/08/10</td>
+                                      <td *ngIf="user.id == 2">2021/08/11</td>
+                                      <td *ngIf="user.id == 3">2021/08/12</td>
+                                      <td *ngIf="user.id == 4">2021/08/15</td>
+                                      <td class="text-center">
+                                          <span class="label label-success" *ngIf="user.id == 1">active</span>
+                                          <span class="label label-default" *ngIf="user.id == 2">pending</span>
+                                          <span class="label label-danger" *ngIf="user.id == 3">inactive</span>
+                                          <span class="label label-default" *ngIf="user.id == 4">pending</span>
+                                      </td>
+                                      <td>
+                                          <a href="#">{{user.email}}</a>
+                                      </td>
+                                      <td style="width: 20%;">
+                                          <a href="#" class="table-link text-warning" title="Show">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link text-info" title="Edit"> 
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link danger" title="Delete">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                      </td>
+                                  </tr>
+                                  <!-- <tr>
+                                      <td>
+                                          <img src="https://bootdey.com/img/Content/user_3.jpg" alt="">
+                                          <a href="#" class="user-link">Full name 2</a>
+                                          <span class="user-subhead">Admin</span>
+                                      </td>
+                                      <td>2013/08/12</td>
+                                      <td class="text-center">
+                                          <span class="label label-success">Active</span>
+                                      </td>
+                                      <td>
+                                          <a href="#">marlon@brando.com</a>
+                                      </td>
+                                      <td style="width: 20%;">
+                                          <a href="#" class="table-link  text-warning">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link  text-info">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link danger">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          <img src="https://bootdey.com/img/Content/user_2.jpg" alt="">
+                                          <a href="#" class="user-link">Full name 3</a>
+                                          <span class="user-subhead">Member</span>
+                                      </td>
+                                      <td>2013/08/12</td>
+                                      <td class="text-center">
+                                          <span class="label label-danger">inactive</span>
+                                      </td>
+                                      <td>
+                                          <a href="#">marlon@brando.com</a>
+                                      </td>
+                                      <td style="width: 20%;">
+                                          <a href="#" class="table-link  text-warning">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link  text-info">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                          <a href="#" class="table-link danger">
+                                              <span class="fa-stack">
+                                                  <i class="fa fa-square fa-stack-2x"></i>
+                                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                              </span>
+                                          </a>
+                                      </td>
+                                  </tr> -->
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 
   <!-- Footer -->
   <footer>
