@@ -15,26 +15,22 @@ import com.ivanicob.userservice.util.security.BcryptUtil;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class UserDTO extends RepresentationModel<UserDTO> {
 	
-	@Getter
 	private Long id;
 	
-	@Getter
 	@NotNull(message = "Name is required.")
 	@Length(min=3, max=255, message="Name must contain between 3 and 255 characters.")
 	private String name;
 	
-	@Getter
 	@NotNull(message = "Login is required.")
 	@Length(min=3, max=60, message="Login must contain between 3 and 60 characters.")
 	private String login;	
@@ -43,13 +39,11 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 	@Length(min=6, message="Password must contain at least 6 characters.")
 	private String password;
 	
-	@Getter
 	@NotNull(message="Email is required.")
 	@Length(max=80, message="Email must be a maximum of 80 characters.")
 	@Email(message="Invalid email.")
 	private String email;
 	
-	@Getter
 	@NotNull(message="The User access role is required.")
 	@Pattern(regexp="^(ROLE_ADMIN|ROLE_USER)$", 
 		message="For the access role only the values ROLE_ADMIN or ROLE_USER are accepted.")
@@ -64,13 +58,13 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 		return new ModelMapper().map(this, User.class);
 	}
 	
-	public User convertDTOToEntity(User user) {
-		user.setName(this.getName());
-		user.setLogin(this.getLogin());
-		user.setEmail(this.getEmail());
-		user.setPassword(BcryptUtil.getHash(this.password));
-		user.setRole(RoleEnum.forName(this.getRole()));
+	public User convertDTOToEntity(User userToUpdate) {
+		userToUpdate.setName(this.getName());
+		userToUpdate.setLogin(this.getLogin());
+		userToUpdate.setEmail(this.getEmail());
+		userToUpdate.setPassword(BcryptUtil.getHash(this.password));
+		userToUpdate.setRole(RoleEnum.forName(this.getRole()));
 		
-		return user;
+		return userToUpdate;
 	}	
 }

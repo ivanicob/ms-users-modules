@@ -42,7 +42,7 @@ public class AuthenticationController {
         try {
         	
         	jwtUtil.initUsers();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
             
         }catch (DisabledException e){
         	e.printStackTrace();
@@ -52,11 +52,11 @@ public class AuthenticationController {
         	throw new Exception("INVALID_CREDENTIALS", e);
         } catch (Exception ex) {
         	ex.printStackTrace();
-            throw new Exception("Inavalid username/password");
+            throw new Exception("Inavalid login/password");
         }
         
-        User user = userService.findByLogin(authRequest.getUsername());
-        String token = jwtUtil.generateToken(authRequest.getUsername());
+        User user = userService.findByLogin(authRequest.getLogin());
+        String token = jwtUtil.generateToken(authRequest.getLogin());
         UserResponse userResponse = new UserResponse();
         
         return  userResponse.convertEntityToUserResponse(user, token);

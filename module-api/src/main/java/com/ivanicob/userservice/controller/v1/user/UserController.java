@@ -179,7 +179,7 @@ public class UserController {
 	}	
 
 	@ApiOperation(value = "Route to delete a User by your id in the API")
-	@DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Response<String>> delete(@RequestHeader(value=UserServiceApiUtil.HEADER_USER_SERVICE_API_VERSION, defaultValue="${api.version}") String apiVersion, 
 			@RequestHeader(value=UserServiceApiUtil.HEADER_API_KEY, defaultValue="${api.key}") String apiKey,
 			@PathVariable("id") Long userId,
