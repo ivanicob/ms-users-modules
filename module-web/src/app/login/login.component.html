@@ -9,8 +9,8 @@
   
       <!-- Login Form -->
       <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
-        <input type="text" id="username" class="fadeIn second" [(ngModel)]="username" name="username" placeholder="username">
-        <input type="password" id="password" class="fadeIn third" [(ngModel)]="password" name="password" placeholder="password">
+        <input type="text" id="login" class="fadeIn second" [(ngModel)]="login" name="login" placeholder="Login">
+        <input type="password" id="password" class="fadeIn third" [(ngModel)]="password" name="password" placeholder="Password">
   
         <button [disabled]="loginForm.invalid || showLoading" type="submit" class="fadeIn fourth">
           <span *ngIf="showLoading">Loading...</span>

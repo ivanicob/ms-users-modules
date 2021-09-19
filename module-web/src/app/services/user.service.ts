@@ -31,16 +31,16 @@ export class UserService {
     return this.http.get<any>(`${this.hostUrl}/api/v1/users`, this.jwt());
   }  
 
-  addUser(formData: FormData): Observable<User>{
-    return this.http.post<User>(`${this.hostUrl}/api/v1/users`, formData, this.jwt());
+  addUser(user: User): Observable<User>{
+    return this.http.post<User>(`${this.hostUrl}/api/v1/users`, user, this.jwt());
   }
 
-  updateUser(formData: FormData): Observable<User>{
-    return this.http.put<User>(`${this.hostUrl}/api/v1/user`, formData, this.jwt());
+  updateUser(user: User): Observable<User>{
+    return this.http.put<User>(`${this.hostUrl}/api/v1/users/${user.id}`, user, this.jwt());
   }
 
   deleteUser(id: number): Observable<any>{
-    return this.http.delete<any>(`${this.hostUrl}/api/v1/user/${id}`, this.jwt());
+    return this.http.delete<any>(`${this.hostUrl}/api/v1/users/${id}`, this.jwt());
   } 
 
   addUserToCache(user: User): void{

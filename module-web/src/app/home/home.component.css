@@ -90,3 +90,13 @@ text-decoration:none;
 .label-danger {
     background-color: #d9534f;
 }
+
+.close {
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.modal-footer {
+    margin-top: 20px;
+}

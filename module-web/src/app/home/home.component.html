@@ -1,6 +1,5 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <!-- <app-security></app-security> -->
   <img
     width="40"
     alt="Angular Logo"
@@ -31,9 +30,29 @@
       </svg>
     </a>    
 </div>
-  
-<div class="content" role="main">
 
+<div style="margin-top: 60px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" style="color:white;">User Manager</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a class="nav-link" (click)="onOpenModal(null, 'add')">Add User <span class="sr-only">(current)</span></a>
+        </li>
+     </ul>
+     <form class="form-inline my-2 my-lg-0">
+        <input type="search" (ngModelChange)="searchUsers(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search users..." required>
+     </form>
+  </div>
+</nav>
+</div>
+
+<div class="content" role="main" id="main-container">
+  <div class="alert alert-warning" *ngIf='invalidMessage'>{{errorMessage}}</div>
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   <hr>
   <div class="container bootstrap snippets bootdey">
@@ -49,7 +68,7 @@
                                   <th><span>Created</span></th>
                                   <th class="text-center"><span>Status</span></th>
                                   <th><span>Email</span></th>
-                                  <th>&nbsp;</th>
+                                  <th><span>Action</span></th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -59,39 +78,42 @@
                                           <img src="/assets/images/avatar_andrea.png" alt="" *ngIf="user.id == 2">
                                           <img src="/assets/images/avatar_luana.png" alt="" *ngIf="user.id == 3">
                                           <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" *ngIf="user.id == 4">
+                                          <img src="/assets/images/avatar_default.jpg" alt="" *ngIf="user.id > 4">
+                                          
                                           <a href="#" class="user-link">{{user.name}}</a>
-                                          <span class="user-subhead" *ngIf="user.id == 1">Admin</span>
-                                          <span class="user-subhead" *ngIf="user.id == 2">Member</span>
-                                          <span class="user-subhead" *ngIf="user.id == 3">Member</span>
-                                          <span class="user-subhead" *ngIf="user.id == 4">Admin</span>                                          
+                                          <span class="user-subhead" *ngIf="user?.role == 'ROLE_ADMIN'"> Admin</span> 
+                                          <span class="user-subhead" *ngIf="user?.role == 'ROLE_USER'"> Member</span>                                        
                                       </td>
                                       <td *ngIf="user.id == 1">2021/08/10</td>
                                       <td *ngIf="user.id == 2">2021/08/11</td>
                                       <td *ngIf="user.id == 3">2021/08/12</td>
                                       <td *ngIf="user.id == 4">2021/08/15</td>
+                                      <td *ngIf="user.id > 4">{{current_date | date:'yyyy/MM/dd'}}</td>
+
                                       <td class="text-center">
                                           <span class="label label-success" *ngIf="user.id == 1">active</span>
                                           <span class="label label-default" *ngIf="user.id == 2">pending</span>
                                           <span class="label label-danger" *ngIf="user.id == 3">inactive</span>
                                           <span class="label label-default" *ngIf="user.id == 4">pending</span>
+                                          <span class="label label-default" *ngIf="user.id > 4">pending</span>
                                       </td>
                                       <td>
                                           <a href="#">{{user.email}}</a>
                                       </td>
                                       <td style="width: 20%;">
-                                          <a href="#" class="table-link text-warning" title="Show">
+                                        <a (click)="onOpenModal(user, 'show')" class="table-link text-info" title="Show"> 
                                               <span class="fa-stack">
                                                   <i class="fa fa-square fa-stack-2x"></i>
                                                   <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                               </span>
                                           </a>
-                                          <a href="#" class="table-link text-info" title="Edit"> 
+                                          <a (click)="onOpenModal(user, 'edit')" class="table-link text-info" title="Edit"> 
                                               <span class="fa-stack">
                                                   <i class="fa fa-square fa-stack-2x"></i>
                                                   <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                               </span>
                                           </a>
-                                          <a href="#" class="table-link danger" title="Delete">
+                                          <a (click)="onOpenModal(user, 'delete')" class="table-link danger" title="Delete">
                                               <span class="fa-stack">
                                                   <i class="fa fa-square fa-stack-2x"></i>
                                                   <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
@@ -99,74 +121,6 @@
                                           </a>
                                       </td>
                                   </tr>
-                                  <!-- <tr>
-                                      <td>
-                                          <img src="https://bootdey.com/img/Content/user_3.jpg" alt="">
-                                          <a href="#" class="user-link">Full name 2</a>
-                                          <span class="user-subhead">Admin</span>
-                                      </td>
-                                      <td>2013/08/12</td>
-                                      <td class="text-center">
-                                          <span class="label label-success">Active</span>
-                                      </td>
-                                      <td>
-                                          <a href="#">marlon@brando.com</a>
-                                      </td>
-                                      <td style="width: 20%;">
-                                          <a href="#" class="table-link  text-warning">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                          <a href="#" class="table-link  text-info">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                          <a href="#" class="table-link danger">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>
-                                          <img src="https://bootdey.com/img/Content/user_2.jpg" alt="">
-                                          <a href="#" class="user-link">Full name 3</a>
-                                          <span class="user-subhead">Member</span>
-                                      </td>
-                                      <td>2013/08/12</td>
-                                      <td class="text-center">
-                                          <span class="label label-danger">inactive</span>
-                                      </td>
-                                      <td>
-                                          <a href="#">marlon@brando.com</a>
-                                      </td>
-                                      <td style="width: 20%;">
-                                          <a href="#" class="table-link  text-warning">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                          <a href="#" class="table-link  text-info">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                          <a href="#" class="table-link danger">
-                                              <span class="fa-stack">
-                                                  <i class="fa fa-square fa-stack-2x"></i>
-                                                  <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                              </span>
-                                          </a>
-                                      </td>
-                                  </tr> -->
                               </tbody>
                           </table>
                       </div>
@@ -175,6 +129,186 @@
           </div>
       </div>
   </div>
+
+  <!-- Add User Modal -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddUser(addForm.value)">
+            <div class="form-group">
+              <label for="name">Name: *</label>
+              <input type="text" required ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="login">Login: *</label>
+              <input type="text" required ngModel name="login" class="form-control" id="login" placeholder="Login" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password: *</label>
+              <input type="password" required ngModel name="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email: *</label>
+              <input type="email" required ngModel name="email" class="form-control" id="email" placeholder="Email" required>
+            </div>                        
+            <div class="form-group">
+              <label for="role">Role: *</label>
+              <select
+                class="form-control"
+                id="role"
+                name="role"
+                ngModel
+                required
+              >
+                <option value="" disabled>Choose a Role</option>
+                <option *ngFor="let r of roles" [ngValue]="r.id">{{ r.value }}</option>
+              </select>
+            </div>
+            <!-- <div class="form-group">
+              <label for="phone">Image URL</label>
+              <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
+            </div> -->
+            <div class="modal-footer">
+              <button type="button" id="add-user-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save</button>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show User Modal -->
+  <div class="modal fade" id="showUserModal" tabindex="-1" role="dialog" aria-labelledby="showUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="showUserModalLabel">Show User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="name">Name: </label>
+              {{showUser?.name}}
+            </div>
+            <div class="form-group">
+              <label for="login">Login: </label>
+              {{showUser?.login}}
+            </div>
+            <div class="form-group">
+              <label for="password">Password: </label>
+              ***
+            </div>
+            <div class="form-group">
+              <label for="email">Email: </label>
+              {{showUser?.email}}
+            </div>                        
+            <div class="form-group">
+              <label for="role">Role: </label>
+              <span class="user-subhead" *ngIf="showUser?.role == 'ROLE_ADMIN'"> Admin</span> 
+              <span class="user-subhead" *ngIf="showUser?.role == 'ROLE_USER'"> Member</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-user-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateUserModalLabel">Edit User {{editUser?.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #editForm="ngForm">
+                <input type="hidden" ngModel="{{editUser?.id}}" name="id" class="form-control" id="id">
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" ngModel="{{editUser?.name}}" name="name" class="form-control" id="name" aria-describedby="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <label for="login">Login:</label>
+                  <input type="text" ngModel="{{editUser?.login}}" name="login" class="form-control" id="login" placeholder="Login">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input type="password" ngModel="{{editUser?.password}}" name="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" ngModel="{{editUser?.email}}" name="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <label for="role">Role:</label>
+                  <select
+                    class="form-control"
+                    id="role"
+                    name="role"
+                    ngModel="{{editUser?.role}}"
+                    required
+                  >
+                    <option value="" disabled>Choose a Role</option>
+                    <option *ngFor="let r of roles" [ngValue]="r.id">{{ r.value }}</option>
+                  </select>
+                </div>                  
+                <!-- <div class="form-group">
+                  <label for="phone">Image URL</label>
+                  <input type="text" ngModel="{{editUser?.name}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+                </div> -->
+                <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateUser(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save</button>
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Delete User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete User {{deleteUser?.name}}?</p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button (click)="onDeleteUser(deleteUser?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification for no users -->
+  <div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">NO USERS!</h4>
+      <p>No Users were found.</p>
+    </div>
+  </div>  
 
   <!-- Footer -->
   <footer>
@@ -186,7 +320,4 @@
     <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
   </svg>
 
-</div>
-
-  
-  
+</div>  

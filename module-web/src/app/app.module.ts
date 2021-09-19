@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from './app.component';
-import { SecurityComponent } from './security/security.component';
 
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
@@ -19,7 +18,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SecurityComponent,
     LoginComponent,
     HomeComponent
   ],

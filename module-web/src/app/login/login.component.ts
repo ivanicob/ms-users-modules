@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   private subscriptions = new SubSink();
   showLoading: boolean;
 
-  username: string = '';
+  login: string = '';
   password: string = '';
-  errorMessage = 'Username or password is incorrect!';
+  errorMessage = 'Login or password is incorrect!';
   successMessage!: string;
   invalidLogin = false;
   loginSuccess = false;
